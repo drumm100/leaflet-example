@@ -52,4 +52,5 @@ function updatePopupContent(popup, totalDistance, unit) {
 
 
 // Markers:
-addMarker(-69.4375, 125.15625, "<b>Test</b><br><a href='https://example.com'>Lorem ipsun</a><br><img src='images/village.webp' alt='Example'>");
+//addMarker(-69.4375, 125.15625, "<b>Test</b><br><a href='https://example.com'>Lorem ipsun</a><br><img src='images/village.webp' alt='Example'>");
+addMarker(-69.4375, 125.15625, "<b>Test</b><br><a href='https://example.com'>Lorem ipsun</a><br>");
