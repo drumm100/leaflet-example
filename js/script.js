@@ -1,3 +1,4 @@
+
 var map = L.map('mapid', {
     crs: L.CRS.Simple, 
     minZoom: -5, 
@@ -11,45 +12,44 @@ var southWest = map.unproject([0, h], map.getMaxZoom());
 var northEast = map.unproject([w, 0], map.getMaxZoom());
 var bounds = new L.LatLngBounds(southWest, northEast);
 
-L.imageOverlay('images/outroros v4.png/', bounds).addTo(map);
+L.imageOverlay('images/outroros v4.png', bounds).addTo(map);
 
 map.setMaxBounds(bounds);
 map.fitBounds(bounds);
 
-var drawnItems = new L.FeatureGroup();
-map.addLayer(drawnItems);
-
-var drawControl = new L.Control.Draw({
-    edit: {
-        featureGroup: drawnItems
+var options = {
+    lengthUnit: {
+        factor: 0.044508,
+        display: 'Miles',
+        decimal: 2,
+        label: 'Distance:'
     },
-    draw: {
-        polygon: false,
-        polyline: false,
-        rectangle: false,
-        circle: false,
-        marker: true
-    }
-});
-map.addControl(drawControl);
+};
+L.control.ruler(options).addTo(map);
 
-function calculateDistance(latlng1, latlng2) {
-    return map.distance(latlng1, latlng2);
+// Debug function
+map.on('click', function(e) {
+    var latlng = e.latlng;
+    console.log(latlng.lat + ', ' + latlng.lng);
+});
+
+function addMarker(lat, lng, popupContent) {
+    var marker = L.marker([lat, lng]).addTo(map);
+    marker.bindPopup(popupContent, {className: 'marker-popup'});
 }
 
-var points = [];
+function adjustMeasurement(totalDistance, conversionFactor) {
+    return totalDistance * conversionFactor;
+}
 
-map.on(L.Draw.Event.CREATED, function (event) {
-    var layer = event.layer;
-    drawnItems.addLayer(layer);
-    
-    if (layer instanceof L.Marker) {
-        points.push(layer.getLatLng());
-        
-        if (points.length == 2) {
-            var distance = calculateDistance(points[0], points[1]);
-            alert('Distance is : ' + distance.toFixed(2) + ' km');
-            points = [];
-        }
+function updatePopupContent(popup, totalDistance, unit) {
+    if (popup) {
+        let content = popup.getContent();
+        content = content.replace(/[\d.]+ mi/g, totalDistance.toFixed(2) + ' ' + unit);
+        popup.setContent(content);
     }
-});
+}
+
+
+// Markers:
+addMarker(-69.4375, 125.15625, "<b>Test</b><br><a href='https://example.com'>Lorem ipsun</a><br><img src='images/village.webp' alt='Example'>");
