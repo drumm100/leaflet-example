@@ -43,10 +43,10 @@ var markerData = [];
 
 
 var customIcon = L.icon({
-    iconUrl: 'images/position-marker-blue.svg', // Substitua pelo caminho da sua imagem
-    iconSize: [38, 38], // Tamanho do ícone
-    iconAnchor: [19, 38], // Ponto de ancoragem (posição onde o ícone será ancorado)
-    popupAnchor: [0, -38] // Ponto de ancoragem do popup em relação ao ícone
+    iconUrl: 'images/position-marker-blue.svg', 
+    iconSize: [38, 38],
+    iconAnchor: [19, 38],
+    popupAnchor: [0, -38] 
 });
 
 function addMarker(lat, lng, popupContent, title) {
@@ -88,7 +88,7 @@ L.easyButton('<img class="marker-button" src="images/position-marker.svg">', fun
 
 
 
-// Função para filtrar e exibir os resultados da busca
+// Markers Search
 document.getElementById('search-input').addEventListener('input', function(e) {
     var searchQuery = e.target.value.toLowerCase();
     var results = markerData.filter(function(item) {
@@ -117,7 +117,7 @@ function clearSearchResults() {
     searchResults.innerHTML = '';
 }
 
-// Event listener para limpar resultados de busca ao clicar fora da caixa de busca
+// Event listener to clean
 document.addEventListener('click', function(e) {
     var searchBox = document.getElementById('search-box');
     if (!searchBox.contains(e.target)) {
